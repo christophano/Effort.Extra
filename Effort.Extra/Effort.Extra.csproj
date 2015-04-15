@@ -130,6 +130,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Entity.Design" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -147,6 +148,7 @@
     <Compile Include="ObjectDataLoaderFactory.cs" />
     <Compile Include="ObjectTableDataLoader`1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableNamingStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Effort.Extra.nuspec" />

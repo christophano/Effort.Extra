@@ -11,5 +11,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("fadfc421-9ef5-4198-8eb0-fbbfcbae1167")]
-[assembly: AssemblyVersion("1.2.1")]
+[assembly: AssemblyVersion("1.2.2")]
 [assembly: InternalsVisibleTo("Effort.Extra.Tests")]

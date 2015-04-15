@@ -45,6 +45,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity.Design" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -67,6 +68,9 @@
     </Compile>
     <Compile Include="..\Effort.Extra\ObjectTableDataLoader`1.cs">
       <Link>ObjectTableDataLoader`1.cs</Link>
+    </Compile>
+    <Compile Include="..\Effort.Extra\TableNamingStrategy.cs">
+      <Link>TableNamingStrategy.cs</Link>
     </Compile>
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>

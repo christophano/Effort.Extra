@@ -4,7 +4,9 @@ namespace Effort.Extra
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Data.Entity.Design.PluralizationServices;
     using System.Diagnostics.Contracts;
+    using System.Globalization;
 
     /// <summary>
     /// An object used to create and access collections of entities.
@@ -13,6 +15,30 @@ namespace Effort.Extra
     {
         private readonly IDictionary<string, IEnumerable> tables = new Dictionary<string, IEnumerable>();
         private readonly Guid identifier = Guid.NewGuid();
+        private readonly Func<string, string> generateTableName;
+
+        /// <summary>
+        /// Initialises a new instance of <c>ObjectData</c>.
+        /// </summary>
+        /// <param name="tableNamingStrategy">
+        /// The strategy to use when creating default table names.
+        /// </param>
+        public ObjectData(TableNamingStrategy tableNamingStrategy = TableNamingStrategy.EntityName)
+        {
+            var pluralisationService = PluralizationService.CreateService(CultureInfo.GetCultureInfo("en-GB"));
+            switch (tableNamingStrategy)
+            {
+                case TableNamingStrategy.Pluralised:
+                    generateTableName = pluralisationService.Pluralize;
+                    break;
+                case TableNamingStrategy.Singularised:
+                    generateTableName = pluralisationService.Singularize;
+                    break;
+                case TableNamingStrategy.EntityName:
+                    generateTableName = s => s;
+                    break;
+            }
+        }
 
         internal virtual Guid Identifier { get { return identifier; } }
 
@@ -52,7 +78,7 @@ namespace Effort.Extra
         /// </example>
         public IList<T> Table<T>(string tableName = null)
         {
-            tableName = tableName ?? typeof(T).Name;
+            tableName = tableName ?? generateTableName(typeof(T).Name);
             IEnumerable table;
             if (!tables.TryGetValue(tableName, out table) || table == null)
             {
