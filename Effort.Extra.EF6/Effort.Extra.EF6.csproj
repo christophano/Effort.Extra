@@ -72,6 +72,7 @@
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <DocumentationFile>bin\Release\Effort.Extra.EF6.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Effort">
