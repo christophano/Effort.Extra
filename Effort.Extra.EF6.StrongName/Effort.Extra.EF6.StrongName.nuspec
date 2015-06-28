@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Effort.Extra.EF6.StrongName</id>
+    <version>1.2.3</version>
+    <title>Extra Effort for EF6 (storngly named)</title>
+    <owners>Chris Rodgers</owners>
+    <authors>Chris Rodgers</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Dynamic entity data loader for Effort; Strongly named version.</summary>
+    <description>Create database definitions in code and load them into the effort in-memory database at runtime</description>
+    <references>
+      <reference file="Effort.Extra.EF6.dll" />
+    </references>
+    <dependencies>
+      <dependency id="Effort.EF6" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Effort.Extra.EF6.dll" target="lib" />
+    <file src="bin\Release\Effort.Extra.EF6.pdb" target="lib" />
+    <file src="bin\Release\Effort.Extra.EF6.xml" target="lib" />
+  </files>
+</package>

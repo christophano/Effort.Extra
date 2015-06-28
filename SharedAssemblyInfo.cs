@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyDescription("Dynamic entity data loader for Effort")]
@@ -12,4 +11,3 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 [assembly: Guid("fadfc421-9ef5-4198-8eb0-fbbfcbae1167")]
 [assembly: AssemblyVersion("1.2.3")]
-[assembly: InternalsVisibleTo("Effort.Extra.Tests")]
