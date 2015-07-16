@@ -154,6 +154,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Behaviours\CreatesNewTableBehaviour.cs" />
     <Compile Include="Behaviours\ReturnsExistingTableBehaviour.cs" />
     <Compile Include="Builder.cs" />
