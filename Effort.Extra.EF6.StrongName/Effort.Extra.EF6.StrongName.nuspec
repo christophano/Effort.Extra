@@ -17,8 +17,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Effort.Extra.EF6.dll" target="lib" />
-    <file src="bin\Release\Effort.Extra.EF6.pdb" target="lib" />
-    <file src="bin\Release\Effort.Extra.EF6.xml" target="lib" />
+    <file src="bin\Release\Effort.Extra.dll" target="lib" />
+    <file src="bin\Release\Effort.Extra.pdb" target="lib" />
+    <file src="bin\Release\Effort.Extra.xml" target="lib" />
   </files>
 </package>

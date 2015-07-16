@@ -1,4 +1,4 @@
 ﻿using System.Reflection;
 
-[assembly: AssemblyTitle("Effort.Extra.EF6")]
+[assembly: AssemblyTitle("Effort.Extra")]
 [assembly: AssemblyKeyFile("../Effort.Extra.snk")]

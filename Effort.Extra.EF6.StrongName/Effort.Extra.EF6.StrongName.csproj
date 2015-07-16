@@ -7,8 +7,8 @@
     <ProjectGuid>{E06BEDC6-B9CE-46A2-B13C-FE3B34B7F131}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Effort.Extra.EF6</RootNamespace>
-    <AssemblyName>Effort.Extra.EF6</AssemblyName>
+    <RootNamespace>Effort.Extra</RootNamespace>
+    <AssemblyName>Effort.Extra</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
@@ -29,7 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Effort.Extra.EF6.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Effort.Extra.xml</DocumentationFile>
     <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
     <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
