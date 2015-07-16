@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Effort.Extra.StrongName", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Effort.Extra.EF6.StrongName", "Effort.Extra.EF6.StrongName\Effort.Extra.EF6.StrongName.csproj", "{E06BEDC6-B9CE-46A2-B13C-FE3B34B7F131}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Effort.Extra.EF6.Tests", "Effort.Extra.EF6.Tests\Effort.Extra.EF6.Tests.csproj", "{D93FD2C5-D490-4AE5-98D3-28CDF3B768D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2CF18BB2-62B4-4779-9E1F-C5906A2E04F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,8 +43,16 @@ Global
 		{E06BEDC6-B9CE-46A2-B13C-FE3B34B7F131}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E06BEDC6-B9CE-46A2-B13C-FE3B34B7F131}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E06BEDC6-B9CE-46A2-B13C-FE3B34B7F131}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D93FD2C5-D490-4AE5-98D3-28CDF3B768D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D93FD2C5-D490-4AE5-98D3-28CDF3B768D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D93FD2C5-D490-4AE5-98D3-28CDF3B768D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D93FD2C5-D490-4AE5-98D3-28CDF3B768D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{064965F8-9D9C-4281-A4DB-2C14C33F52D4} = {2CF18BB2-62B4-4779-9E1F-C5906A2E04F2}
+		{D93FD2C5-D490-4AE5-98D3-28CDF3B768D6} = {2CF18BB2-62B4-4779-9E1F-C5906A2E04F2}
 	EndGlobalSection
 EndGlobal
