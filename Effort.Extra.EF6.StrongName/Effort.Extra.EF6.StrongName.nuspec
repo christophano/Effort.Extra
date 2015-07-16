@@ -10,7 +10,7 @@
     <summary>Dynamic entity data loader for Effort; Strongly named version.</summary>
     <description>Create database definitions in code and load them into the effort in-memory database at runtime</description>
     <references>
-      <reference file="Effort.Extra.EF6.dll" />
+      <reference file="Effort.Extra.dll" />
     </references>
     <dependencies>
       <dependency id="Effort.EF6" />
