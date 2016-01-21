@@ -127,6 +127,9 @@
     <Compile Include="..\Effort.Extra.Tests\Fella.cs">
       <Link>Fella.cs</Link>
     </Compile>
+    <Compile Include="..\Effort.Extra.Tests\FellaWithAttribute.cs">
+      <Link>FellaWithAttribute.cs</Link>
+    </Compile>
     <Compile Include="..\Effort.Extra.Tests\ObjectData.cs">
       <Link>ObjectData.cs</Link>
     </Compile>

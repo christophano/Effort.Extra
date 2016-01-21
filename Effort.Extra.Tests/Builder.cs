@@ -2,6 +2,7 @@
 namespace Effort.Extra.Tests
 {
     using System;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Reflection;
     using Effort.DataLoaders;
@@ -16,10 +17,16 @@ namespace Effort.Extra.Tests
             return (TableDescription)ctor.Invoke(new object[] { name, columns });
         }
 
-        public static ColumnDescription CreateColumnDescription(PropertyInfo property)
+        private static ColumnDescription CreateColumnDescription(PropertyInfo property)
         {
             var ctor = typeof(ColumnDescription).GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic).First();
-            return (ColumnDescription)ctor.Invoke(new object[] { property.Name, property.PropertyType });
+            return (ColumnDescription)ctor.Invoke(new object[] { GetPropertyName(property), property.PropertyType });
+        }
+
+        private static string GetPropertyName(PropertyInfo property)
+        {
+            var columnAttribute = property.GetCustomAttribute<ColumnAttribute>();
+            return columnAttribute != null ? columnAttribute.Name : property.Name;
         }
     }
 }

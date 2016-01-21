@@ -144,6 +144,7 @@
       <HintPath>..\packages\NSubstitute.1.7.2.0\lib\NET45\NSubstitute.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Transactions" />
@@ -160,6 +161,7 @@
     <Compile Include="Behaviours\CreatesNewTableBehaviour.cs" />
     <Compile Include="Behaviours\ReturnsExistingTableBehaviour.cs" />
     <Compile Include="Builder.cs" />
+    <Compile Include="FellaWithAttribute.cs" />
     <Compile Include="ObjectData.cs" />
     <Compile Include="ObjectDataCollection.cs" />
     <Compile Include="ObjectDataLoader.cs" />

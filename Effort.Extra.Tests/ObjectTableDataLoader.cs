@@ -62,16 +62,16 @@ namespace Effort.Extra.Tests
         public class CreateFormatter
         {
             [Subject("ObjectTableDataLoader.CreateFormatter")]
-            public abstract class create_formatter_context : WithSubject<StubObjectTableDataLoader>
+            public abstract class create_formatter_context<TModel> : WithSubject<StubObjectTableDataLoader<TModel>>
             {
                 protected static Exception thrown_exception;
-                protected static Func<Fella, object[]> formatter;
+                protected static Func<TModel, object[]> formatter;
 
                 Because of = () => thrown_exception = Catch.Exception(
                     () => formatter = Subject.CreateFormatter());
             }
 
-            public class when_formatter_is_created : create_formatter_context
+            public class when_formatter_is_created : create_formatter_context<Fella>
             {
                 It does_not_throw_an_exception = () => thrown_exception.ShouldBeNull();
 
@@ -84,15 +84,29 @@ namespace Effort.Extra.Tests
                     formatted[0].ShouldEqual("Fred");
                 };
             }
+
+            public class when_type_has_column_attribtues : create_formatter_context<FellaWithAttribute>
+            {
+                It does_not_throw_an_exception = () => thrown_exception.ShouldBeNull();
+
+                It the_formatter_is_not_null = () => formatter.ShouldNotBeNull();
+
+                It the_formatter_behaves_correctly = () =>
+                {
+                    var formatted = formatter(new FellaWithAttribute { Name = "Fred" });
+                    formatted.Length.ShouldEqual(1);
+                    formatted[0].ShouldEqual("Fred");
+                };
+            }
         }
 
-        public class StubObjectTableDataLoader : ObjectTableDataLoader<Fella>
+        public class StubObjectTableDataLoader<TModel> : ObjectTableDataLoader<TModel>
         {
             public StubObjectTableDataLoader() 
-                : base(Builder.CreateTableDescription("Fella", typeof(Fella)), new List<Fella>())
+                : base(Builder.CreateTableDescription(typeof(TModel).Name, typeof(TModel)), new List<TModel>())
             { }
 
-            public new Func<Fella, object[]> CreateFormatter()
+            public new Func<TModel, object[]> CreateFormatter()
             {
                 return base.CreateFormatter();
             }
