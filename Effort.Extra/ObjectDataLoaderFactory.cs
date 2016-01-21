@@ -38,6 +38,7 @@ namespace Effort.Extra
         /// </returns>
         public ITableDataLoader CreateTableDataLoader(TableDescription table)
         {
+            Contract.Requires<ArgumentNullException>(table != null);
             if (!data.HasTable(table.Name)) return new EmptyTableDataLoader();
             var entityType = data.TableType(table.Name);
             var type = LoaderType.MakeGenericType(entityType);
