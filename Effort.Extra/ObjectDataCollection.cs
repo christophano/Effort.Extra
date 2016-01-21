@@ -3,7 +3,6 @@ namespace Effort.Extra
 {
     using System;
     using System.Collections.ObjectModel;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     /// A keyed collection for ObjectData
@@ -19,7 +18,7 @@ namespace Effort.Extra
         /// </returns>
         protected override Guid GetKeyForItem(ObjectData item)
         {
-            Contract.Requires<ArgumentNullException>(item != null);
+            if (item == null) throw new ArgumentNullException(nameof(item));
             return item.Identifier;
         }
 
@@ -29,7 +28,7 @@ namespace Effort.Extra
         /// <param name="data">The data.</param>
         public void AddOrUpdate(ObjectData data)
         {
-            Contract.Requires<ArgumentNullException>(data != null);
+            if (data == null) throw new ArgumentNullException(nameof(data));
             if (Contains(data.Identifier)) Remove(data.Identifier);
             Add(data);
         }
