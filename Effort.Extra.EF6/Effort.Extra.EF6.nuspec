@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Effort.Extra.EF6</id>
-    <version>1.2.4</version>
+    <version>1.2.5</version>
     <title>Extra Effort for EF6</title>
     <owners>Chris Rodgers</owners>
     <authors>Chris Rodgers</authors>
