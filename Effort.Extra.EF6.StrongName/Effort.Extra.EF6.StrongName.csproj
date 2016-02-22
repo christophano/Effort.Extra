@@ -78,7 +78,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>...\Effort.Extra.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Effort.Extra.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Effort">
