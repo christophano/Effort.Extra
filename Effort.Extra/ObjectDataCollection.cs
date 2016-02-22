@@ -18,7 +18,7 @@ namespace Effort.Extra
         /// </returns>
         protected override Guid GetKeyForItem(ObjectData item)
         {
-            if (item == null) throw new ArgumentNullException(nameof(item));
+            if (item == null) throw new ArgumentNullException("item");
             return item.Identifier;
         }
 
@@ -28,7 +28,7 @@ namespace Effort.Extra
         /// <param name="data">The data.</param>
         public void AddOrUpdate(ObjectData data)
         {
-            if (data == null) throw new ArgumentNullException(nameof(data));
+            if (data == null) throw new ArgumentNullException("data");
             if (Contains(data.Identifier)) Remove(data.Identifier);
             Add(data);
         }
