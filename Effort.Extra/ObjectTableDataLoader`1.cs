@@ -31,7 +31,9 @@ namespace Effort.Extra
             var type = typeof(T);
             var param = Expression.Parameter(type, "x");
             var initialisers = table.Columns
-                .Select(c => Expression.TypeAs(Expression.Property(param, GetProperty(type, c)), typeof(object)));
+                .Select(column => GetProperty(type, column))
+                .Select(property => ToExpression(param, property))
+                .Select(expression => CastExpression(expression));
             var newArray = Expression.NewArrayInit(typeof(object), initialisers);
             return Expression.Lambda<Func<T, object[]>>(newArray, param).Compile();
         }
@@ -41,6 +43,17 @@ namespace Effort.Extra
             return parentType.GetProperty(column.Name, PropertyFlags)
                    ?? parentType.GetProperties(PropertyFlags)
                                 .SingleOrDefault(p => MatchColumnAttribute(p, column));
+        }
+
+        private static Expression ToExpression(ParameterExpression parameter, PropertyInfo property)
+        {
+            if (property == null) return Expression.Constant(null);
+            return Expression.Property(parameter, property);
+        }
+
+        private static Expression CastExpression(Expression expression)
+        {
+            return Expression.TypeAs(expression, typeof(object));
         }
 
         private static bool MatchColumnAttribute(PropertyInfo property, ColumnDescription column)
