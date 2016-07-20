@@ -9,6 +9,8 @@ namespace Effort.Extra
     using System.Linq.Expressions;
     using System.Reflection;
     using Effort.DataLoaders;
+    using Microsoft.CSharp.RuntimeBinder;
+    using Binder = Microsoft.CSharp.RuntimeBinder.Binder;
 
     internal class ObjectTableDataLoader<T> : ITableDataLoader
     {
@@ -31,8 +33,8 @@ namespace Effort.Extra
             var type = typeof(T);
             var param = Expression.Parameter(type, "x");
             var initialisers = table.Columns
-                .Select(column => GetProperty(type, column))
-                .Select(property => ToExpression(param, property))
+                .Select(column => new { Property = GetProperty(type, column), Column = column })
+                .Select(a => ToExpression(param, a.Property, a.Column))
                 .Select(expression => CastExpression(expression));
             var newArray = Expression.NewArrayInit(typeof(object), initialisers);
             return Expression.Lambda<Func<T, object[]>>(newArray, param).Compile();
@@ -45,9 +47,25 @@ namespace Effort.Extra
                                 .SingleOrDefault(p => MatchColumnAttribute(p, column));
         }
 
-        private static Expression ToExpression(ParameterExpression parameter, PropertyInfo property)
+        // ReSharper disable once UnusedMember.Local
+        private static string GetDiscriminator(T item)
         {
-            if (property == null) return Expression.Constant(null);
+            return item.GetType().Name;
+        }
+
+        private static Expression ToExpression(ParameterExpression parameter, PropertyInfo property, ColumnDescription column)
+        {
+            if (property == null)
+            {
+                if (column.Name == "Discriminator")
+                {
+                    return Expression.Call(typeof(ObjectTableDataLoader<T>).GetMethod("GetDiscriminator", BindingFlags.Static | BindingFlags.NonPublic), parameter);
+                }
+                var binder = Binder.GetMember(CSharpBinderFlags.None, column.Name, typeof (ObjectData), 
+                    new[] { CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None, null) });
+                var expression = Expression.Dynamic(binder, typeof (object), parameter);
+                return Expression.TryCatch(expression, Expression.Catch(typeof(RuntimeBinderException), Expression.Constant(null)));
+            }; 
             return Expression.Property(parameter, property);
         }
 
@@ -66,7 +84,8 @@ namespace Effort.Extra
 
         public IEnumerable<object[]> GetData()
         {
-            return entities.Select(formatter.Value);
+            var results = entities.Select(formatter.Value);
+            return results;
         }
     }
 }
