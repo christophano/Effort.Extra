@@ -119,12 +119,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Effort, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Effort.1.1.4\lib\net45\Effort.dll</HintPath>
+      <HintPath>..\packages\Effort.1.1.5\lib\net45\Effort.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NMemory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NMemory.1.0.1\lib\net45\NMemory.dll</HintPath>
+      <HintPath>..\packages\NMemory.1.1.2\lib\net45\NMemory.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -151,8 +151,12 @@
     <Compile Include="TableNamingStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Effort.Extra.nuspec" />
-    <None Include="packages.config" />
+    <None Include="Effort.Extra.nuspec">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
