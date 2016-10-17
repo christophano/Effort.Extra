@@ -16,7 +16,7 @@ namespace Effort.Extra.Tests
             {
                 protected static Exception thrown_exception;
                 protected static TableDescription table;
-                protected static IEnumerable<Fella> entities;
+                protected static ObjectDataTable<Fella> entities;
                 protected static ObjectTableDataLoader<Fella> subject;
 
                 Because of = () => thrown_exception = Catch.Exception(
@@ -28,7 +28,7 @@ namespace Effort.Extra.Tests
                 Establish context = () =>
                 {
                     table = null;
-                    entities = new List<Fella>();
+                    entities = new ObjectDataTable<Fella>();
                 };
 
                 It throws_an_argument_null_exception =
@@ -52,7 +52,7 @@ namespace Effort.Extra.Tests
                 Establish context = () =>
                 {
                     table = Builder.CreateTableDescription("Fella", typeof(Fella));
-                    entities = new List<Fella>();
+                    entities = new ObjectDataTable<Fella>();
                 };
 
                 It does_not_throw_an_exception = () => thrown_exception.ShouldBeNull();
@@ -103,7 +103,7 @@ namespace Effort.Extra.Tests
         public class StubObjectTableDataLoader<TModel> : ObjectTableDataLoader<TModel>
         {
             public StubObjectTableDataLoader() 
-                : base(Builder.CreateTableDescription(typeof(TModel).Name, typeof(TModel)), new List<TModel>())
+                : base(Builder.CreateTableDescription(typeof(TModel).Name, typeof(TModel)), new ObjectDataTable<TModel>())
             { }
 
             public new Func<TModel, object[]> CreateFormatter()

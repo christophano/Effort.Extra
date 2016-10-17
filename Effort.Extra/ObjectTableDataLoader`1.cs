@@ -14,17 +14,17 @@ namespace Effort.Extra
 
     internal class ObjectTableDataLoader<T> : ITableDataLoader
     {
-        private static readonly BindingFlags PropertyFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-        private readonly TableDescription table;
-        private readonly IEnumerable<T> entities;
+        private const BindingFlags PropertyFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+        private readonly TableDescription description;
+        private readonly ObjectDataTable<T> table;
         private readonly Lazy<Func<T, object[]>> formatter;
 
-        public ObjectTableDataLoader(TableDescription table, IEnumerable<T> entities)
+        public ObjectTableDataLoader(TableDescription description, ObjectDataTable<T> table)
         {
+            Contract.Requires<ArgumentNullException>(description != null);
             Contract.Requires<ArgumentNullException>(table != null);
-            Contract.Requires<ArgumentNullException>(entities != null);
+            this.description = description;
             this.table = table;
-            this.entities = entities;
             formatter = new Lazy<Func<T, object[]>>(CreateFormatter);
         }
 
@@ -32,7 +32,7 @@ namespace Effort.Extra
         {
             var type = typeof(T);
             var param = Expression.Parameter(type, "x");
-            var initialisers = table.Columns
+            var initialisers = description.Columns
                 .Select(column => new { Property = GetProperty(type, column), Column = column })
                 .Select(a => ToExpression(param, a.Property, a.Column))
                 .Select(expression => CastExpression(expression));
@@ -48,18 +48,18 @@ namespace Effort.Extra
         }
 
         // ReSharper disable once UnusedMember.Local
-        private static string GetDiscriminator(T item)
+        private string GetDiscriminator(T item)
         {
-            return item.GetType().Name;
+            return table.GetDiscriminator(item);
         }
 
-        private static Expression ToExpression(ParameterExpression parameter, PropertyInfo property, ColumnDescription column)
+        private Expression ToExpression(ParameterExpression parameter, PropertyInfo property, ColumnDescription column)
         {
             if (property == null)
             {
-                if (column.Name == "Discriminator")
+                if (column.Name == table.DiscriminatorColumn)
                 {
-                    return Expression.Call(typeof(ObjectTableDataLoader<T>).GetMethod("GetDiscriminator", BindingFlags.Static | BindingFlags.NonPublic), parameter);
+                    return Expression.Call(Expression.Constant(table), typeof(ObjectDataTable<T>).GetMethod("GetDiscriminator", BindingFlags.Instance | BindingFlags.NonPublic), parameter);
                 }
                 var binder = Binder.GetMember(CSharpBinderFlags.None, column.Name, typeof (ObjectData), 
                     new[] { CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None, null) });
@@ -84,7 +84,7 @@ namespace Effort.Extra
 
         public IEnumerable<object[]> GetData()
         {
-            var results = entities.Select(formatter.Value);
+            var results = table.Select(formatter.Value);
             return results;
         }
     }

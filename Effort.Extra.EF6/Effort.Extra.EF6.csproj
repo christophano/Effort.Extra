@@ -158,6 +158,9 @@
     <Compile Include="..\Effort.Extra\ObjectDataLoaderFactory.cs">
       <Link>ObjectDataLoaderFactory.cs</Link>
     </Compile>
+    <Compile Include="..\Effort.Extra\ObjectDataTable`1.cs">
+      <Link>ObjectDataTable`1.cs</Link>
+    </Compile>
     <Compile Include="..\Effort.Extra\ObjectTableDataLoader`1.cs">
       <Link>ObjectTableDataLoader`1.cs</Link>
     </Compile>

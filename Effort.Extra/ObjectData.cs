@@ -14,7 +14,6 @@ namespace Effort.Extra
     public class ObjectData
     {
         private readonly IDictionary<string, IEnumerable> tables = new Dictionary<string, IEnumerable>();
-        private readonly Guid identifier = Guid.NewGuid();
         private readonly Func<string, string> generateTableName;
 
         /// <summary>
@@ -40,7 +39,7 @@ namespace Effort.Extra
             }
         }
 
-        internal virtual Guid Identifier { get { return identifier; } }
+        internal virtual Guid Identifier { get; } = Guid.NewGuid();
 
         /// <summary>
         /// Returns the table specified by name. If a table with the specified name does not already exist, it will be created.
@@ -76,23 +75,20 @@ namespace Effort.Extra
         /// // Jeff
         /// </code>
         /// </example>
-        public IList<T> Table<T>(string tableName = null)
+        public ObjectDataTable<T> Table<T>(string tableName = null)
         {
             tableName = tableName ?? generateTableName(typeof(T).Name);
             IEnumerable table;
             if (!tables.TryGetValue(tableName, out table) || table == null)
             {
-                table = new List<T>();
+                table = new ObjectDataTable<T>();
                 tables[tableName] = table;
             }
-            if (table is IList<T>)
+            if (table is ObjectDataTable<T>)
             {
-                return (IList<T>)table;
+                return (ObjectDataTable<T>)table;
             }
-            var message = String.Format(
-                "A table with the name '{0}' already exists, but the element type is incorrect.\r\nExpected type: '{1}'\r\nActual type: '{2}'",
-                tableName, typeof(T).Name, table.GetType().GetGenericArguments()[0].Name);
-            throw new InvalidOperationException(message);
+            throw new InvalidOperationException($"A table with the name '{tableName}' already exists, but the element type is incorrect.\r\nExpected type: '{typeof(T).Name}'\r\nActual type: '{table.GetType().GetGenericArguments()[0].Name}'");
         }
 
         internal bool HasTable(string tableName)

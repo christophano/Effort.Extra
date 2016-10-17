@@ -59,9 +59,9 @@ namespace Effort.Extra
                 {
                     return new ObjectDataLoaderFactory(data);
                 }
-                throw new KeyNotFoundException(String.Format("The key '{0}' was not found in the data collection.", id));
+                throw new KeyNotFoundException($"The key '{id}' was not found in the data collection.");
             }
-            throw new InvalidOperationException(String.Format("Unable to parse '{0}' as a guid.", Argument));
+            throw new InvalidOperationException($"Unable to parse '{Argument}' as a guid.");
         }
     }
 }
