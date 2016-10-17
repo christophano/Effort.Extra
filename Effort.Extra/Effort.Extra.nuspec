@@ -17,8 +17,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Effort.Extra.dll" target="lib" />
-    <file src="bin\Release\Effort.Extra.pdb" target="lib" />
-    <file src="bin\Release\Effort.Extra.xml" target="lib" />
+    <file src="bin\Release\Effort.Extra.dll" target="lib\net45" />
+    <file src="bin\Release\Effort.Extra.pdb" target="lib\net45" />
+    <file src="bin\Release\Effort.Extra.xml" target="lib\net45" />
   </files>
 </package>
