@@ -4,7 +4,6 @@ namespace Effort.Extra
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
@@ -21,8 +20,8 @@ namespace Effort.Extra
 
         public ObjectTableDataLoader(TableDescription description, ObjectDataTable<T> table)
         {
-            Contract.Requires<ArgumentNullException>(description != null);
-            Contract.Requires<ArgumentNullException>(table != null);
+            if (description == null) throw new ArgumentNullException(nameof(description));
+            if (table == null) throw new ArgumentNullException(nameof(table));
             this.description = description;
             this.table = table;
             formatter = new Lazy<Func<T, object[]>>(CreateFormatter);

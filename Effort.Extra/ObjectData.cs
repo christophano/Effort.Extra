@@ -5,7 +5,6 @@ namespace Effort.Extra
     using System.Collections;
     using System.Collections.Generic;
     using System.Data.Entity.Design.PluralizationServices;
-    using System.Diagnostics.Contracts;
     using System.Globalization;
 
     /// <summary>
@@ -93,15 +92,15 @@ namespace Effort.Extra
 
         internal bool HasTable(string tableName)
         {
-            Contract.Requires<ArgumentNullException>(tableName != null);
-            Contract.Requires<ArgumentException>(!String.IsNullOrWhiteSpace(tableName));
+            if (tableName == null) throw new ArgumentNullException(nameof(tableName));
+            if (String.IsNullOrWhiteSpace(tableName)) throw new ArgumentException(nameof(tableName));
             return tables.ContainsKey(tableName);
         }
 
         internal Type TableType(string tableName)
         {
-            Contract.Requires<ArgumentNullException>(tableName != null);
-            Contract.Requires<ArgumentException>(!String.IsNullOrWhiteSpace(tableName));
+            if (tableName == null) throw new ArgumentNullException(nameof(tableName));
+            if (String.IsNullOrWhiteSpace(tableName)) throw new ArgumentException(nameof(tableName));
             IEnumerable table;
             if (tables.TryGetValue(tableName, out table))
             {
@@ -112,8 +111,8 @@ namespace Effort.Extra
 
         internal object GetTable(string tableName)
         {
-            Contract.Requires<ArgumentNullException>(tableName != null);
-            Contract.Requires<ArgumentException>(!String.IsNullOrWhiteSpace(tableName));
+            if (tableName == null) throw new ArgumentNullException(nameof(tableName));
+            if (String.IsNullOrWhiteSpace(tableName)) throw new ArgumentException(nameof(tableName));
             IEnumerable table;
             tables.TryGetValue(tableName, out table);
             return table;

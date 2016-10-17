@@ -4,7 +4,6 @@ namespace Effort.Extra
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     /// Represents a collection of object data entities.
@@ -50,7 +49,7 @@ namespace Effort.Extra
         /// <returns>The discriminator value.</returns>
         internal string GetDiscriminator(T item)
         {
-            Contract.Requires<ArgumentException>(item != null);
+            if (item == null) throw new ArgumentNullException(nameof(item));
             var type = item.GetType();
             string discriminator;
             if (!discriminators.TryGetValue(type, out discriminator))

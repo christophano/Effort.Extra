@@ -3,7 +3,6 @@ namespace Effort.Extra
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.Contracts;
     using Effort.DataLoaders;
 
     /// <summary>
@@ -24,7 +23,7 @@ namespace Effort.Extra
         /// <param name="data">The data.</param>
         public ObjectDataLoader(ObjectData data)
         {
-            Contract.Requires<ArgumentNullException>(data != null);
+            if (data == null) throw new ArgumentNullException(nameof(data));
             Argument = data.Identifier.ToString();
             DataCollection.AddOrUpdate(data);
         }
