@@ -1,7 +1,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/nmnb8cobvp6t5w7u?svg=true)](https://ci.appveyor.com/project/christophano/effort-extra)
 
 # Extra Effort
-Extra Effort is an extension to the excellent [Effort](http://effort.codeplex.com/) library that provides an additional data loader implementation.
+Extra Effort is an extension to the excellent [Effort](https://github.com/tamasflamich/effort) library that provides an additional data loader implementation.
 
 
 ### Data Loaders
