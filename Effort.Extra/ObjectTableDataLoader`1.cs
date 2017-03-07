@@ -60,11 +60,11 @@ namespace Effort.Extra
                 {
                     return Expression.Call(Expression.Constant(table), typeof(ObjectDataTable<T>).GetMethod("GetDiscriminator", BindingFlags.Instance | BindingFlags.NonPublic), parameter);
                 }
-                var binder = Binder.GetMember(CSharpBinderFlags.None, column.Name, typeof (ObjectData), 
+                var binder = Binder.GetMember(CSharpBinderFlags.None, column.Name, typeof (ObjectData),
                     new[] { CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None, null) });
                 var expression = Expression.Dynamic(binder, typeof (object), parameter);
                 return Expression.TryCatch(expression, Expression.Catch(typeof(RuntimeBinderException), Expression.Constant(null)));
-            }; 
+            };
             return Expression.Property(parameter, property);
         }
 
@@ -75,7 +75,6 @@ namespace Effort.Extra
 
         private static bool MatchColumnAttribute(PropertyInfo property, ColumnDescription column)
         {
-            if (property.PropertyType != column.Type) return false;
             var columnAttribute = property.GetCustomAttribute<ColumnAttribute>();
             if (columnAttribute == null) return false;
             return columnAttribute.Name == column.Name;
