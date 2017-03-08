@@ -132,12 +132,6 @@
     <Compile Include="..\Effort.Extra.Tests\Builder.cs">
       <Link>Builder.cs</Link>
     </Compile>
-    <Compile Include="..\Effort.Extra.Tests\Fella.cs">
-      <Link>Fella.cs</Link>
-    </Compile>
-    <Compile Include="..\Effort.Extra.Tests\FellaWithAttribute.cs">
-      <Link>FellaWithAttribute.cs</Link>
-    </Compile>
     <Compile Include="..\Effort.Extra.Tests\ObjectData.cs">
       <Link>ObjectData.cs</Link>
     </Compile>
@@ -153,6 +147,12 @@
     <Compile Include="..\Effort.Extra.Tests\ObjectTableDataLoader.cs">
       <Link>ObjectTableDataLoader.cs</Link>
     </Compile>
+    <Compile Include="..\Effort.Extra.Tests\Person.cs">
+      <Link>Person.cs</Link>
+    </Compile>
+    <Compile Include="..\Effort.Extra.Tests\PersonWithAttribute.cs">
+      <Link>PersonWithAttribute.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +164,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

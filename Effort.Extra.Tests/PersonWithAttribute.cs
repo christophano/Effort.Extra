@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class FellaWithAttribute
+    public class PersonWithAttribute
     {
         [Column("Alias")]
         public string Name { get; set; }

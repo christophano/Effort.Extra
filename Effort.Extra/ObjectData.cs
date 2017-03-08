@@ -56,18 +56,18 @@ namespace Effort.Extra
         /// </exception>
         /// <example>
         /// <code language="c#">
-        /// public class Fella
+        /// public class Person
         /// {
         ///     public string Name { get; set; }
         /// }
         /// ...
         /// var data = new ObjectData();
-        /// var table = data.Table&lt;Fella>();
-        /// table.Add(new Fella { Name = "Fred" });
-        /// table.Add(new Fella { Name = "Jeff" });
-        /// foreach (var fella in data.Table&lt;Fella>())
+        /// var table = data.Table&lt;Person>();
+        /// table.Add(new Person { Name = "Fred" });
+        /// table.Add(new Person { Name = "Jeff" });
+        /// foreach (var person in data.Table&lt;Person>())
         /// {
-        ///     Debug.Print(fella.Name);
+        ///     Debug.Print(person.Name);
         /// }
         /// // prints:
         /// // Fred
@@ -106,7 +106,7 @@ namespace Effort.Extra
             {
                 return table.GetType().GetGenericArguments()[0];
             }
-            throw new InvalidOperationException(String.Format("No table with the name '{0}' defined.", tableName));
+            throw new InvalidOperationException($"No table with the name '{tableName}' defined.");
         }
 
         internal object GetTable(string tableName)

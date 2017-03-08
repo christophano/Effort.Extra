@@ -42,7 +42,7 @@ namespace Effort.Extra.Tests
                 It does_not_throw_an_exception = () => thrown_exception.ShouldBeNull();
             }
         }
-        
+
         public class CreateTableDataLoader
         {
             [Subject("ObjectDataLoaderFactory.CreateTableDataLoader")]
@@ -70,7 +70,7 @@ namespace Effort.Extra.Tests
                     table = null;
                 };
 
-                It throws_an_argument_null_exception = () => 
+                It throws_an_argument_null_exception = () =>
                     thrown_exception.ShouldBeOfExactType<ArgumentNullException>();
             }
 
@@ -91,14 +91,14 @@ namespace Effort.Extra.Tests
             {
                 Establish context = () =>
                 {
-                    data.Table<Fella>().Add(new Fella { Name = "Fred" });
-                    table = Builder.CreateTableDescription("Fella", typeof(Fella));
+                    data.Table<Person>().Add(new Person { Name = "Fred" });
+                    table = Builder.CreateTableDescription(typeof(Person).Name, typeof(Person));
                 };
 
                 It does_not_throw_an_exception = () => thrown_exception.ShouldBeNull();
 
                 It the_result_is_entity_table_data_loader =
-                    () => result.ShouldBeOfExactType<ObjectTableDataLoader<Fella>>();
+                    () => result.ShouldBeOfExactType<ObjectTableDataLoader<Person>>();
             }
         }
     }

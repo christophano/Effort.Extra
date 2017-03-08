@@ -165,13 +165,13 @@
     <Compile Include="Behaviours\CreatesNewTableBehaviour.cs" />
     <Compile Include="Behaviours\ReturnsExistingTableBehaviour.cs" />
     <Compile Include="Builder.cs" />
-    <Compile Include="FellaWithAttribute.cs" />
+    <Compile Include="PersonWithAttribute.cs" />
     <Compile Include="ObjectData.cs" />
     <Compile Include="ObjectDataCollection.cs" />
     <Compile Include="ObjectDataLoader.cs" />
     <Compile Include="ObjectDataLoaderFactory.cs" />
     <Compile Include="ObjectTableDataLoader.cs" />
-    <Compile Include="Fella.cs" />
+    <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +183,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

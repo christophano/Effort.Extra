@@ -45,7 +45,7 @@ namespace Effort.Extra
         /// <summary>
         /// Gets the discriminator value for the given type.
         /// </summary>
-        /// <typeparam name="TType">The type of entity.</typeparam>
+        /// <typeparam name="T">The type of entity.</typeparam>
         /// <returns>The discriminator value.</returns>
         internal string GetDiscriminator(T item)
         {

@@ -15,7 +15,7 @@ namespace Effort.Extra
         /// </summary>
         Pluralised,
         /// <summary>
-        /// Default tabe names should be the entity type name.
+        /// Default table names should be the entity type name.
         /// </summary>
         EntityName
     }

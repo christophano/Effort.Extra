@@ -1,7 +1,7 @@
 ﻿
 namespace Effort.Extra.Tests
 {
-    public class Fella
+    public class Person
     {
         public string Name { get; set; }
     }

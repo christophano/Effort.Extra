@@ -16,11 +16,11 @@ namespace Effort.Extra.Tests
             {
                 protected static Exception thrown_exception;
                 protected static TableDescription table;
-                protected static ObjectDataTable<Fella> entities;
-                protected static ObjectTableDataLoader<Fella> subject;
+                protected static ObjectDataTable<Person> entities;
+                protected static ObjectTableDataLoader<Person> subject;
 
                 Because of = () => thrown_exception = Catch.Exception(
-                    () => subject = new ObjectTableDataLoader<Fella>(table, entities));
+                    () => subject = new ObjectTableDataLoader<Person>(table, entities));
             }
 
             public class when_table_is_null : ctor_context
@@ -28,7 +28,7 @@ namespace Effort.Extra.Tests
                 Establish context = () =>
                 {
                     table = null;
-                    entities = new ObjectDataTable<Fella>();
+                    entities = new ObjectDataTable<Person>();
                 };
 
                 It throws_an_argument_null_exception =
@@ -39,7 +39,7 @@ namespace Effort.Extra.Tests
             {
                 Establish context = () =>
                 {
-                    table = Builder.CreateTableDescription("Fella", typeof(Fella));
+                    table = Builder.CreateTableDescription(typeof(Person).Name, typeof(Person));
                     entities = null;
                 };
 
@@ -51,14 +51,14 @@ namespace Effort.Extra.Tests
             {
                 Establish context = () =>
                 {
-                    table = Builder.CreateTableDescription("Fella", typeof(Fella));
-                    entities = new ObjectDataTable<Fella>();
+                    table = Builder.CreateTableDescription(typeof(Person).Name, typeof(Person));
+                    entities = new ObjectDataTable<Person>();
                 };
 
                 It does_not_throw_an_exception = () => thrown_exception.ShouldBeNull();
             }
         }
-        
+
         public class CreateFormatter
         {
             [Subject("ObjectTableDataLoader.CreateFormatter")]
@@ -71,7 +71,7 @@ namespace Effort.Extra.Tests
                     () => formatter = Subject.CreateFormatter());
             }
 
-            public class when_formatter_is_created : create_formatter_context<Fella>
+            public class when_formatter_is_created : create_formatter_context<Person>
             {
                 It does_not_throw_an_exception = () => thrown_exception.ShouldBeNull();
 
@@ -79,13 +79,13 @@ namespace Effort.Extra.Tests
 
                 It the_formatter_behaves_correctly = () =>
                 {
-                    var formatted = formatter(new Fella { Name = "Fred" });
+                    var formatted = formatter(new Person { Name = "Fred" });
                     formatted.Length.ShouldEqual(1);
                     formatted[0].ShouldEqual("Fred");
                 };
             }
 
-            public class when_type_has_column_attribtues : create_formatter_context<FellaWithAttribute>
+            public class when_type_has_column_attribtues : create_formatter_context<PersonWithAttribute>
             {
                 It does_not_throw_an_exception = () => thrown_exception.ShouldBeNull();
 
@@ -93,7 +93,7 @@ namespace Effort.Extra.Tests
 
                 It the_formatter_behaves_correctly = () =>
                 {
-                    var formatted = formatter(new FellaWithAttribute { Name = "Fred" });
+                    var formatted = formatter(new PersonWithAttribute { Name = "Fred" });
                     formatted.Length.ShouldEqual(1);
                     formatted[0].ShouldEqual("Fred");
                 };
@@ -102,7 +102,7 @@ namespace Effort.Extra.Tests
 
         public class StubObjectTableDataLoader<TModel> : ObjectTableDataLoader<TModel>
         {
-            public StubObjectTableDataLoader() 
+            public StubObjectTableDataLoader()
                 : base(Builder.CreateTableDescription(typeof(TModel).Name, typeof(TModel)), new ObjectDataTable<TModel>())
             { }
 

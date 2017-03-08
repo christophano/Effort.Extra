@@ -46,7 +46,6 @@ namespace Effort.Extra
                                 .SingleOrDefault(p => MatchColumnAttribute(p, column));
         }
 
-        // ReSharper disable once UnusedMember.Local
         private string GetDiscriminator(T item)
         {
             return table.GetDiscriminator(item);
@@ -58,13 +57,13 @@ namespace Effort.Extra
             {
                 if (column.Name == table.DiscriminatorColumn)
                 {
-                    return Expression.Call(Expression.Constant(table), typeof(ObjectDataTable<T>).GetMethod("GetDiscriminator", BindingFlags.Instance | BindingFlags.NonPublic), parameter);
+                    return Expression.Call(Expression.Constant(table), typeof(ObjectDataTable<T>).GetMethod(nameof(GetDiscriminator), BindingFlags.Instance | BindingFlags.NonPublic), parameter);
                 }
                 var binder = Binder.GetMember(CSharpBinderFlags.None, column.Name, typeof (ObjectData),
                     new[] { CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None, null) });
                 var expression = Expression.Dynamic(binder, typeof (object), parameter);
                 return Expression.TryCatch(expression, Expression.Catch(typeof(RuntimeBinderException), Expression.Constant(null)));
-            };
+            }
             return Expression.Property(parameter, property);
         }
 

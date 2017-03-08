@@ -20,22 +20,22 @@ var connection = DbConnectionFactory.CreateTransient(dataLoader);
 
 Adding entities to the `ObjectData` instance is as simple as calling the `Table` method with the generic parameter of the type you want to add. The table name is optional.
 ```csharp
-data.Table<Fella>().Add(new Fella { Name = "Jeff" });
+data.Table<Person>().Add(new Person { Name = "Jeff" });
 ```
 
 If the entity contains a db generated identity field, then this should be provided too. This will enable you to create relations between entities.
 ```csharp
-data.Table<Fella>().Add(new Fella { Id = 1, Name = "Jeff" });
+data.Table<Person>().Add(new Person { Id = 1, Name = "Jack" });
 data.Table<Dog>().Add(new Dog { Id = 1, OwnerId = 1, Name = "Jim" });
 ```
 
 If your schema uses a different naming convention that the entity type name, then you can simply provide the set name when calling the `Table` method.
 ```csharp
-data.Table<Fella>("People").Add(new Fella { Id = 1, Name = "Jeff" });
+data.Table<Person>("Folk").Add(new Person { Id = 1, Name = "Jane" });
 ```
 
 If your schema calls for multiple sets of the same type, each collection is keyed on the set name, so multiple sets are supported.
 ```csharp
-data.Table<Fella>("SomeFellas").Add(new Fella { Id = 1, Name = "Jeff" });
-data.Table<Fella>("OtherFellas").Add(new Fella { Id = 1, Name = "Jim" });
+data.Table<Person>("SomePeople").Add(new Person { Id = 1, Name = "John" });
+data.Table<Person>("OtherPeople").Add(new Person { Id = 1, Name = "June" });
 ```
