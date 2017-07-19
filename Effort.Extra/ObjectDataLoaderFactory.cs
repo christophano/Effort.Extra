@@ -2,6 +2,7 @@
 namespace Effort.Extra
 {
     using System;
+    using System.Data.Entity;
     using Effort.DataLoaders;
 
     /// <summary>
@@ -10,16 +11,15 @@ namespace Effort.Extra
     internal class ObjectDataLoaderFactory : ITableDataLoaderFactory
     {
         private static readonly Type LoaderType = typeof(ObjectTableDataLoader<>);
-        private readonly ObjectData data;
+        private readonly ObjectData  data;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectDataLoaderFactory"/> class.
         /// </summary>
         /// <param name="data">The data.</param>
-        public ObjectDataLoaderFactory(ObjectData data)
+        public ObjectDataLoaderFactory(ObjectData  data)
         {
-            if (data == null) throw new ArgumentNullException(nameof(data));
-            this.data = data;
+            this.data = data ?? throw new ArgumentNullException(nameof(data));
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Effort.Extra
                 typeof (TableDescription), 
                 typeof (ObjectDataTable<>).MakeGenericType(entityType)
             });
-            return (ITableDataLoader)constructor?.Invoke(new[] { table, data.GetTable(table.Name) });
+            return (ITableDataLoader)constructor?.Invoke(new object[] { table, data.GetTable(table.Name) });
         }
     }
 }

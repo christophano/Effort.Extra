@@ -121,6 +121,9 @@
       <HintPath>..\packages\Effort.1.2.0\lib\net45\Effort.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Machine.Fakes, Version=2.8.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Machine.Fakes.2.8.0-beta3\lib\net45\Machine.Fakes.dll</HintPath>
       <Private>True</Private>

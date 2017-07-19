@@ -122,6 +122,9 @@
       <HintPath>..\packages\Effort.1.2.0\lib\net45\Effort.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="NMemory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
       <HintPath>..\packages\NMemory.1.1.2\lib\net45\NMemory.dll</HintPath>
       <Private>True</Private>
@@ -142,14 +145,16 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="MetadataWorkspaceFactory.cs" />
     <Compile Include="ObjectData.cs" />
+    <Compile Include="ObjectDataTable.cs" />
+    <Compile Include="ObjectData`1.cs" />
     <Compile Include="ObjectDataCollection.cs" />
     <Compile Include="ObjectDataLoader.cs" />
     <Compile Include="ObjectDataLoaderFactory.cs" />
     <Compile Include="ObjectDataTable`1.cs" />
     <Compile Include="ObjectTableDataLoader`1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TableNamingStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Effort.Extra.nuspec">

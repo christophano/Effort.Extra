@@ -2,6 +2,7 @@
 namespace Effort.Extra.Tests
 {
     using System;
+    using System.Data.Entity;
     using Effort.DataLoaders;
     using Machine.Fakes;
     using Machine.Specifications;
@@ -36,7 +37,7 @@ namespace Effort.Extra.Tests
             {
                 Establish context = () =>
                 {
-                    data = new Extra.ObjectData();
+                    data = new Extra.ObjectData<DbContext>();
                 };
 
                 It does_not_throw_an_exception = () => thrown_exception.ShouldBeNull();
@@ -55,7 +56,7 @@ namespace Effort.Extra.Tests
 
                 Establish context = () =>
                 {
-                    data = new Extra.ObjectData();
+                    data = new Extra.ObjectData<DbContext>();
                     Configure(x => x.For<Extra.ObjectData>().Use(() => data));
                 };
 

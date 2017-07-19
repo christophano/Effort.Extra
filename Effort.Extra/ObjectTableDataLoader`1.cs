@@ -4,6 +4,7 @@ namespace Effort.Extra
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Core.Mapping;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
@@ -20,10 +21,8 @@ namespace Effort.Extra
 
         public ObjectTableDataLoader(TableDescription description, ObjectDataTable<T> table)
         {
-            if (description == null) throw new ArgumentNullException(nameof(description));
-            if (table == null) throw new ArgumentNullException(nameof(table));
-            this.description = description;
-            this.table = table;
+            this.description = description ?? throw new ArgumentNullException(nameof(description));
+            this.table = table ?? throw new ArgumentNullException(nameof(table));
             formatter = new Lazy<Func<T, object[]>>(CreateFormatter);
         }
 
@@ -32,18 +31,11 @@ namespace Effort.Extra
             var type = typeof(T);
             var param = Expression.Parameter(type, "x");
             var initialisers = description.Columns
-                .Select(column => new { Property = GetProperty(type, column), Column = column })
-                .Select(a => ToExpression(param, a.Property, a.Column))
+                .Select(column => table.PropertyMappings.Single(m => m.Column.Name == column.Name))
+                .Select(map => ToExpression(param, map))
                 .Select(expression => CastExpression(expression));
             var newArray = Expression.NewArrayInit(typeof(object), initialisers);
             return Expression.Lambda<Func<T, object[]>>(newArray, param).Compile();
-        }
-
-        private static PropertyInfo GetProperty(Type parentType, ColumnDescription column)
-        {
-            return parentType.GetProperty(column.Name, PropertyFlags)
-                   ?? parentType.GetProperties(PropertyFlags)
-                                .SingleOrDefault(p => MatchColumnAttribute(p, column));
         }
 
         private string GetDiscriminator(T item)
@@ -51,32 +43,21 @@ namespace Effort.Extra
             return table.GetDiscriminator(item);
         }
 
-        private Expression ToExpression(ParameterExpression parameter, PropertyInfo property, ColumnDescription column)
+        private Expression ToExpression(ParameterExpression parameter, ScalarPropertyMapping map)
         {
-            if (property == null)
+            if (map.Column.Name == table.DiscriminatorColumn)
             {
-                if (column.Name == table.DiscriminatorColumn)
-                {
-                    return Expression.Call(Expression.Constant(table), typeof(ObjectDataTable<T>).GetMethod(nameof(GetDiscriminator), BindingFlags.Instance | BindingFlags.NonPublic), parameter);
-                }
-                var binder = Binder.GetMember(CSharpBinderFlags.None, column.Name, typeof (ObjectData),
-                    new[] { CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None, null) });
-                var expression = Expression.Dynamic(binder, typeof (object), parameter);
-                return Expression.TryCatch(expression, Expression.Catch(typeof(RuntimeBinderException), Expression.Constant(null)));
+                return Expression.Call(Expression.Constant(table), typeof(ObjectDataTable<T>).GetMethod(nameof(GetDiscriminator), BindingFlags.Instance | BindingFlags.NonPublic), parameter);
             }
-            return Expression.Property(parameter, property);
+            var binder = Binder.GetMember(CSharpBinderFlags.None, map.Property.Name, typeof(T),
+                new[] { CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None, null) });
+            var expression = Expression.Dynamic(binder, typeof (object), parameter);
+            return Expression.TryCatch(expression, Expression.Catch(typeof(RuntimeBinderException), Expression.Constant(null)));
         }
 
         private static Expression CastExpression(Expression expression)
         {
             return Expression.TypeAs(expression, typeof(object));
-        }
-
-        private static bool MatchColumnAttribute(PropertyInfo property, ColumnDescription column)
-        {
-            var columnAttribute = property.GetCustomAttribute<ColumnAttribute>();
-            if (columnAttribute == null) return false;
-            return columnAttribute.Name == column.Name;
         }
 
         public IEnumerable<object[]> GetData()

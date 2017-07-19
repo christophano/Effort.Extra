@@ -1,45 +1,23 @@
-﻿
-namespace Effort.Extra
+﻿namespace Effort.Extra
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Data.Entity.Design.PluralizationServices;
-    using System.Globalization;
+    using System.Data.Entity.Core.Mapping;
+    using System.Data.Entity.Core.Metadata.Edm;
+    using System.Linq;
 
-    /// <summary>
-    /// An object used to create and access collections of entities.
-    /// </summary>
-    public class ObjectData
+    public abstract class ObjectData
     {
-        private readonly IDictionary<string, IEnumerable> tables = new Dictionary<string, IEnumerable>();
-        private readonly Func<string, string> generateTableName;
+        private readonly MetadataWorkspace metadata;
+        private readonly IDictionary<Type, ObjectDataTable> tables = new Dictionary<Type, ObjectDataTable>();
 
-        /// <summary>
-        /// Initialises a new instance of <c>ObjectData</c>.
-        /// </summary>
-        /// <param name="tableNamingStrategy">
-        /// The strategy to use when creating default table names.
-        /// </param>
-        public ObjectData(TableNamingStrategy tableNamingStrategy = TableNamingStrategy.EntityName)
+        protected ObjectData(MetadataWorkspace metadata)
         {
-            var pluralisationService = PluralizationService.CreateService(CultureInfo.GetCultureInfo("en-GB"));
-            switch (tableNamingStrategy)
-            {
-                case TableNamingStrategy.Pluralised:
-                    generateTableName = pluralisationService.Pluralize;
-                    break;
-                case TableNamingStrategy.Singularised:
-                    generateTableName = pluralisationService.Singularize;
-                    break;
-                case TableNamingStrategy.EntityName:
-                    generateTableName = s => s;
-                    break;
-            }
+            this.metadata = metadata;
         }
-
+        
         internal virtual Guid Identifier { get; } = Guid.NewGuid();
-
+        
         /// <summary>
         /// Returns the table specified by name. If a table with the specified name does not already exist, it will be created.
         /// </summary>
@@ -74,48 +52,79 @@ namespace Effort.Extra
         /// // Jeff
         /// </code>
         /// </example>
-        public ObjectDataTable<T> Table<T>(string tableName = null)
+        public ObjectDataTable<T> Table<T>()
         {
-            tableName = tableName ?? generateTableName(typeof(T).Name);
-            IEnumerable table;
-            if (!tables.TryGetValue(tableName, out table) || table == null)
+            if (!tables.TryGetValue(typeof(T), out var table) || table == null)
             {
-                table = new ObjectDataTable<T>();
-                tables[tableName] = table;
+                var entitySetMapping = GetEntitySetMapping<T>(metadata);
+                table = new ObjectDataTable<T>(GetTableName(entitySetMapping), GetPropertyMappings(entitySetMapping));
+                tables[typeof(T)] = table;
             }
-            if (table is ObjectDataTable<T>)
-            {
-                return (ObjectDataTable<T>)table;
-            }
-            throw new InvalidOperationException($"A table with the name '{tableName}' already exists, but the element type is incorrect.\r\nExpected type: '{typeof(T).Name}'\r\nActual type: '{table.GetType().GetGenericArguments()[0].Name}'");
+            return table as ObjectDataTable<T> ?? 
+                   throw new InvalidOperationException($"A table for the type '{typeof(T).Name}' already exists, but the element type is incorrect.\r\nExpected type: '{typeof(T).Name}'\r\nActual type: '{table.GetType().GetGenericArguments()[0].Name}'");
+        }
+        
+        private static EntitySetMapping GetEntitySetMapping<T>(MetadataWorkspace metadata)
+        {
+            var objectItemCollection = (ObjectItemCollection)metadata.GetItemCollection(DataSpace.OCSpace);
+            var entityType = metadata.GetItems<EntityType>(DataSpace.OCSpace)
+                .Single(e => objectItemCollection.GetClrType(e) == typeof(T));
+            var entitySetContainer = metadata.GetItems<EntityContainer>(DataSpace.CSpace)
+                .Single()
+                .EntitySets
+                .Single(s => s.ElementType.Name == entityType.Name);
+            var entitySetMapping = metadata.GetItems<EntityContainerMapping>(DataSpace.CSpace)
+                .Single()
+                .EntitySetMappings
+                .Single(m => m.EntitySet == entitySetContainer);
+            return entitySetMapping;
         }
 
+        private static string GetTableName(EntitySetMapping entitySetMapping)
+        {
+            var entitySet = entitySetMapping
+                .EntityTypeMappings.Single()
+                .Fragments.Single()
+                .StoreEntitySet;
+            return entitySet.MetadataProperties["Table"]?.Value?.ToString() ?? entitySet.Name;
+        }
+        
+        private static IEnumerable<ScalarPropertyMapping> GetPropertyMappings(EntitySetMapping entitySetMapping)
+        {
+            var propertyMappings = entitySetMapping.EntityTypeMappings
+                .Single()
+                .Fragments
+                .Single()
+                .PropertyMappings
+                .OfType<ScalarPropertyMapping>()
+                .ToArray();
+            return propertyMappings;
+        }
+        
         internal bool HasTable(string tableName)
         {
             if (tableName == null) throw new ArgumentNullException(nameof(tableName));
             if (String.IsNullOrWhiteSpace(tableName)) throw new ArgumentException(nameof(tableName));
-            return tables.ContainsKey(tableName);
+            return tables.Values.Any(t => t.TableName == tableName);
         }
 
         internal Type TableType(string tableName)
         {
             if (tableName == null) throw new ArgumentNullException(nameof(tableName));
             if (String.IsNullOrWhiteSpace(tableName)) throw new ArgumentException(nameof(tableName));
-            IEnumerable table;
-            if (tables.TryGetValue(tableName, out table))
+            var table = tables.Values.SingleOrDefault(t => t.TableName == tableName);
+            if (table != null)
             {
                 return table.GetType().GetGenericArguments()[0];
             }
             throw new InvalidOperationException($"No table with the name '{tableName}' defined.");
         }
 
-        internal object GetTable(string tableName)
+        internal ObjectDataTable GetTable(string tableName)
         {
             if (tableName == null) throw new ArgumentNullException(nameof(tableName));
             if (String.IsNullOrWhiteSpace(tableName)) throw new ArgumentException(nameof(tableName));
-            IEnumerable table;
-            tables.TryGetValue(tableName, out table);
-            return table;
+            return tables.Values.SingleOrDefault(t => t.TableName == tableName);
         }
     }
 }

@@ -152,6 +152,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Effort.Extra\MetadataWorkspaceFactory.cs">
+      <Link>MetadataWorkspaceFactory.cs</Link>
+    </Compile>
     <Compile Include="..\Effort.Extra\ObjectData.cs">
       <Link>ObjectData.cs</Link>
     </Compile>
@@ -164,14 +167,17 @@
     <Compile Include="..\Effort.Extra\ObjectDataLoaderFactory.cs">
       <Link>ObjectDataLoaderFactory.cs</Link>
     </Compile>
+    <Compile Include="..\Effort.Extra\ObjectDataTable.cs">
+      <Link>ObjectDataTable.cs</Link>
+    </Compile>
     <Compile Include="..\Effort.Extra\ObjectDataTable`1.cs">
       <Link>ObjectDataTable`1.cs</Link>
     </Compile>
+    <Compile Include="..\Effort.Extra\ObjectData`1.cs">
+      <Link>ObjectData`1.cs</Link>
+    </Compile>
     <Compile Include="..\Effort.Extra\ObjectTableDataLoader`1.cs">
       <Link>ObjectTableDataLoader`1.cs</Link>
-    </Compile>
-    <Compile Include="..\Effort.Extra\TableNamingStrategy.cs">
-      <Link>TableNamingStrategy.cs</Link>
     </Compile>
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>

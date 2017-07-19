@@ -3,6 +3,7 @@ namespace Effort.Extra.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
     using Effort.Extra.Tests.Behaviours;
     using Machine.Fakes;
     using Machine.Specifications;
@@ -12,7 +13,7 @@ namespace Effort.Extra.Tests
         public class Ctor
         {
             [Subject("ObjectData.Ctor")]
-            public class when_class_is_instantiated : WithSubject<Extra.ObjectData>
+            public class when_class_is_instantiated : WithSubject<Extra.ObjectData<DbContext>>
             {
                 It generates_a_new_identifier = () => Subject.Identifier.ShouldNotEqual(Guid.Empty);
             }
@@ -21,21 +22,19 @@ namespace Effort.Extra.Tests
         public class Table
         {
             [Subject("ObjectData.Table")]
-            public abstract class table_context : WithSubject<Extra.ObjectData>
+            public abstract class table_context : WithSubject<Extra.ObjectData<DbContext>>
             {
                 protected static Exception thrown_exception;
-                protected static string table_name;
                 protected static IList<object> result;
 
                 Because of = () => thrown_exception = Catch.Exception(
-                    () => result = Subject.Table<object>(table_name));
+                    () => result = Subject.Table<object>());
             }
 
             public class when_table_with_name_does_not_exist : table_context
             {
                 Establish context = () =>
                 {
-                    table_name = "Knights_of_the_Round_Table";
                 };
 
                 Behaves_like<CreatesNewTableBehaviour> a_new_table_is_created;
@@ -47,8 +46,7 @@ namespace Effort.Extra.Tests
                 
                 Establish context = () =>
                 {
-                    table_name = "Knights_of_the_Round_Table";
-                    expected_result = Subject.Table<object>(table_name);
+                    expected_result = Subject.Table<object>();
                     expected_result.Add("Arthur, King of the Britons");
                     expected_result.Add("Sir Bedevere, the Wise");
                     expected_result.Add("Sir Lancelot, the Brave");
@@ -63,8 +61,7 @@ namespace Effort.Extra.Tests
             {
                 Establish context = () =>
                 {
-                    table_name = "Knights_of_the_Round_Table";
-                    var table = Subject.Table<string>(table_name);
+                    var table = Subject.Table<string>();
                     table.Add("Arthur, King of the Britons");
                     table.Add("Sir Bedevere, the Wise");
                     table.Add("Sir Lancelot, the Brave");
@@ -131,7 +128,7 @@ namespace Effort.Extra.Tests
                 Establish context = () =>
                 {
                     table_name = "Knights_of_the_Round_Table";
-                    Subject.Table<string>(table_name);
+                    Subject.Table<string>();
                 };
 
                 It does_not_throw_an_exception = () => thrown_exception.ShouldBeNull();
@@ -189,8 +186,7 @@ namespace Effort.Extra.Tests
             {
                 Establish context = () =>
                 {
-                    table_name = "Knights_of_the_Round_Table";
-                    Subject.Table<string>(table_name);
+                    Subject.Table<string>();
                 };
 
                 It does_not_throw_an_exception = () => thrown_exception.ShouldBeNull();
@@ -251,8 +247,7 @@ namespace Effort.Extra.Tests
 
                 Establish context = () =>
                 {
-                    table_name = "Knights_of_the_Round_Table";
-                    expected_result = Subject.Table<string>(table_name);
+                    expected_result = Subject.Table<string>();
                 };
 
                 It does_not_throw_an_exception = () => thrown_exception.ShouldBeNull();

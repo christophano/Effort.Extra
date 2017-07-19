@@ -3,11 +3,12 @@ namespace Effort.Extra
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.Data.Entity;
 
     /// <summary>
     /// A keyed collection for ObjectData
     /// </summary>
-    internal class ObjectDataCollection : KeyedCollection<Guid, ObjectData>
+    internal class ObjectDataCollection: KeyedCollection<Guid, ObjectData>
     {
         /// <summary>
         /// Extracts the key from the specified element.

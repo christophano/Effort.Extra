@@ -2,6 +2,7 @@
 namespace Effort.Extra.Tests
 {
     using System;
+    using System.Data.Entity;
     using Machine.Fakes;
     using Machine.Specifications;
 
@@ -35,7 +36,7 @@ namespace Effort.Extra.Tests
             {
                 Establish context = () =>
                 {
-                    item = new Extra.ObjectData();
+                    item = new Extra.ObjectData<DbContext>();
                 };
 
                 It does_not_throw_an_exception = () => thrown_exception.ShouldBeNull();
@@ -59,7 +60,7 @@ namespace Effort.Extra.Tests
             {
                 Establish context = () =>
                 {
-                    data = new Extra.ObjectData();
+                    data = new Extra.ObjectData<DbContext>();
                 };
 
                 It does_not_throw_an_exception = () => thrown_exception.ShouldBeNull();
@@ -91,7 +92,7 @@ namespace Effort.Extra.Tests
             {
                 private readonly Guid identifier;
 
-                public StubObjectData(Guid identifier)
+                public StubObjectData(Guid identifier) : base (null)
                 {
                     this.identifier = identifier;
                 }
@@ -132,7 +133,7 @@ namespace Effort.Extra.Tests
             {
                 Establish context = () =>
                 {
-                    var item = new Extra.ObjectData();
+                    var item = new Extra.ObjectData<DbContext>();
                     Subject.Add(item);
                     key = item.Identifier;
                 };

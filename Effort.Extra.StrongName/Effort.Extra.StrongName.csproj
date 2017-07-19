@@ -128,6 +128,9 @@
       <HintPath>..\packages\Effort.1.2.0\lib\net45\Effort.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="NMemory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
       <HintPath>..\packages\NMemory.1.1.2\lib\net45\NMemory.dll</HintPath>
       <Private>True</Private>
@@ -145,6 +148,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Effort.Extra\MetadataWorkspaceFactory.cs">
+      <Link>MetadataWorkspaceFactory.cs</Link>
+    </Compile>
     <Compile Include="..\Effort.Extra\ObjectData.cs">
       <Link>ObjectData.cs</Link>
     </Compile>
@@ -157,14 +163,17 @@
     <Compile Include="..\Effort.Extra\ObjectDataLoaderFactory.cs">
       <Link>ObjectDataLoaderFactory.cs</Link>
     </Compile>
+    <Compile Include="..\Effort.Extra\ObjectDataTable.cs">
+      <Link>ObjectDataTable.cs</Link>
+    </Compile>
     <Compile Include="..\Effort.Extra\ObjectDataTable`1.cs">
       <Link>ObjectDataTable`1.cs</Link>
     </Compile>
+    <Compile Include="..\Effort.Extra\ObjectData`1.cs">
+      <Link>ObjectData`1.cs</Link>
+    </Compile>
     <Compile Include="..\Effort.Extra\ObjectTableDataLoader`1.cs">
       <Link>ObjectTableDataLoader`1.cs</Link>
-    </Compile>
-    <Compile Include="..\Effort.Extra\TableNamingStrategy.cs">
-      <Link>TableNamingStrategy.cs</Link>
     </Compile>
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>

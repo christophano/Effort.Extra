@@ -3,25 +3,21 @@ namespace Effort.Extra
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
     using Effort.DataLoaders;
 
     /// <summary>
     /// An implementation of <c>IDataLoader</c> for <c>ObjectData</c>.
     /// </summary>
-    public class ObjectDataLoader : IDataLoader
+    public class ObjectDataLoader  : IDataLoader
     {
-        private static readonly ObjectDataCollection DataCollection = new ObjectDataCollection();
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ObjectDataLoader"/> class.
-        /// </summary>
-        public ObjectDataLoader() { }
+        private static readonly ObjectDataCollection  DataCollection = new ObjectDataCollection();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectDataLoader"/> class.
         /// </summary>
         /// <param name="data">The data.</param>
-        public ObjectDataLoader(ObjectData data)
+        public ObjectDataLoader(ObjectData  data)
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
             Argument = data.Identifier.ToString();
@@ -50,11 +46,9 @@ namespace Effort.Extra
         /// </exception>
         public ITableDataLoaderFactory CreateTableDataLoaderFactory()
         {
-            Guid id;
-            if (Guid.TryParse(Argument, out id))
+            if (Guid.TryParse(Argument, out var id))
             {
-                ObjectData data;
-                if (DataCollection.TryGetValue(id, out data))
+                if (DataCollection.TryGetValue(id, out var data))
                 {
                     return new ObjectDataLoaderFactory(data);
                 }

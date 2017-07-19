@@ -28,7 +28,7 @@ namespace Effort.Extra.Tests
                 Establish context = () =>
                 {
                     table = null;
-                    entities = new ObjectDataTable<Person>();
+                    entities = new ObjectDataTable<Person>(null, null);
                 };
 
                 It throws_an_argument_null_exception =
@@ -52,7 +52,7 @@ namespace Effort.Extra.Tests
                 Establish context = () =>
                 {
                     table = Builder.CreateTableDescription(typeof(Person).Name, typeof(Person));
-                    entities = new ObjectDataTable<Person>();
+                    entities = new ObjectDataTable<Person>(null, null);
                 };
 
                 It does_not_throw_an_exception = () => thrown_exception.ShouldBeNull();
@@ -103,7 +103,7 @@ namespace Effort.Extra.Tests
         public class StubObjectTableDataLoader<TModel> : ObjectTableDataLoader<TModel>
         {
             public StubObjectTableDataLoader()
-                : base(Builder.CreateTableDescription(typeof(TModel).Name, typeof(TModel)), new ObjectDataTable<TModel>())
+                : base(Builder.CreateTableDescription(typeof(TModel).Name, typeof(TModel)), new ObjectDataTable<TModel>(null, null))
             { }
 
             public new Func<TModel, object[]> CreateFormatter()

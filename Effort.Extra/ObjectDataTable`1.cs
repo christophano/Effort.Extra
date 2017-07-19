@@ -4,13 +4,15 @@ namespace Effort.Extra
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Data.Entity.Core.Mapping;
 
     /// <summary>
     /// Represents a collection of object data entities.
     /// </summary>
     /// <typeparam name="T">The type of entity that this table stores.</typeparam>
     /// <seealso cref="System.Collections.Generic.IList{T}" />
-    public class ObjectDataTable<T> : IList<T>
+    public class ObjectDataTable<T> : ObjectDataTable, IList<T>
     {
         private readonly IList<T> list = new List<T>();
         private readonly IDictionary<Type, string> discriminators = new Dictionary<Type, string>();
@@ -18,15 +20,9 @@ namespace Effort.Extra
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectDataTable{T}"/> class.
         /// </summary>
-        internal ObjectDataTable() { }
-
-        /// <summary>
-        /// Gets or sets the discriminator column name.
-        /// </summary>
-        /// <value>
-        /// The discriminator column name.
-        /// </value>
-        public string DiscriminatorColumn { get; set; } = "Discriminator";
+        /// <param name="tableName">The name of the table.</param>
+        /// <param name="propertyMappings"></param>
+        internal ObjectDataTable(string tableName, IEnumerable<ScalarPropertyMapping> propertyMappings) : base(tableName, propertyMappings) { }
 
         /// <summary>
         /// Adds a discriminator value for the given type.
@@ -64,8 +60,8 @@ namespace Effort.Extra
 
         public T this[int index]
         {
-            get { return list[index]; }
-            set { list[index] = value; }
+            get => list[index];
+            set => list[index] = value;
         }
 
         public int Count => list.Count;
