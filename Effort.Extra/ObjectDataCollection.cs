@@ -9,6 +9,8 @@ namespace Effort.Extra
     /// </summary>
     internal class ObjectDataCollection : KeyedCollection<Guid, ObjectData>
     {
+        private readonly object locker = new object();
+
         /// <summary>
         /// Extracts the key from the specified element.
         /// </summary>
@@ -28,9 +30,12 @@ namespace Effort.Extra
         /// <param name="data">The data.</param>
         public void AddOrUpdate(ObjectData data)
         {
-            if (data == null) throw new ArgumentNullException(nameof(data));
-            if (Contains(data.Identifier)) Remove(data.Identifier);
-            Add(data);
+            lock (locker)
+            {
+                if (data == null) throw new ArgumentNullException(nameof(data));
+                if (Contains(data.Identifier)) Remove(data.Identifier);
+                Add(data);
+            }
         }
 
         /// <summary>
@@ -41,8 +46,11 @@ namespace Effort.Extra
         /// <returns><c>true</c>, if the key exists, otherwise <c>false</c>.</returns>
         public bool TryGetValue(Guid key, out ObjectData data)
         {
-            data = Contains(key) ? this[key] : null;
-            return data != null;
+            lock (locker)
+            {
+                data = Contains(key) ? this[key] : null;
+                return data != null;
+            }
         }
     }
 }
