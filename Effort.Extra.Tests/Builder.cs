@@ -11,7 +11,8 @@ namespace Effort.Extra.Tests
     {
         public static TableDescription CreateTableDescription(string name, Type type)
         {
-            var ctor = typeof(TableDescription).GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic).First();
+            var ctor = typeof(TableDescription).GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)
+                .First(c => c.GetParameters().Length == 2);
             var columns = type.GetProperties().Select(CreateColumnDescription).ToArray();
 
             return (TableDescription)ctor.Invoke(new object[] { name, columns });
