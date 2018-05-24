@@ -132,9 +132,6 @@
     <Compile Include="..\Effort.Extra.Tests\ObjectData.cs">
       <Link>ObjectData.cs</Link>
     </Compile>
-    <Compile Include="..\Effort.Extra.Tests\ObjectDataCollection.cs">
-      <Link>ObjectDataCollection.cs</Link>
-    </Compile>
     <Compile Include="..\Effort.Extra.Tests\ObjectDataLoader.cs">
       <Link>ObjectDataLoader.cs</Link>
     </Compile>

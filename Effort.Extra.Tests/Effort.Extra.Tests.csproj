@@ -163,7 +163,6 @@
     <Compile Include="Builder.cs" />
     <Compile Include="PersonWithAttribute.cs" />
     <Compile Include="ObjectData.cs" />
-    <Compile Include="ObjectDataCollection.cs" />
     <Compile Include="ObjectDataLoader.cs" />
     <Compile Include="ObjectDataLoaderFactory.cs" />
     <Compile Include="ObjectTableDataLoader.cs" />

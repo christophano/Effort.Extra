@@ -142,7 +142,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ObjectData.cs" />
-    <Compile Include="ObjectDataCollection.cs" />
     <Compile Include="ObjectDataLoader.cs" />
     <Compile Include="ObjectDataLoaderFactory.cs" />
     <Compile Include="ObjectDataTable`1.cs" />

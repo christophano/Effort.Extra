@@ -2,6 +2,7 @@
 namespace Effort.Extra
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using Effort.DataLoaders;
 
@@ -10,7 +11,7 @@ namespace Effort.Extra
     /// </summary>
     public class ObjectDataLoader : IDataLoader
     {
-        private static readonly ObjectDataCollection DataCollection = new ObjectDataCollection();
+        private static readonly ConcurrentDictionary<Guid, ObjectData> DataCollection = new ConcurrentDictionary<Guid, ObjectData>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectDataLoader"/> class.
@@ -25,7 +26,7 @@ namespace Effort.Extra
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
             Argument = data.Identifier.ToString();
-            DataCollection.AddOrUpdate(data);
+            DataCollection.AddOrUpdate(data.Identifier, data, (key, value) => data);
         }
 
         /// <summary>
@@ -50,11 +51,9 @@ namespace Effort.Extra
         /// </exception>
         public ITableDataLoaderFactory CreateTableDataLoaderFactory()
         {
-            Guid id;
-            if (Guid.TryParse(Argument, out id))
+            if (Guid.TryParse(Argument, out var id))
             {
-                ObjectData data;
-                if (DataCollection.TryGetValue(id, out data))
+                if (DataCollection.TryGetValue(id, out var data))
                 {
                     return new ObjectDataLoaderFactory(data);
                 }
